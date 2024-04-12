@@ -1,0 +1,10 @@
+<div class="login-container">
+    <div *ngIf="!loginDisplay" class="login-message">
+        <p class="login-info">Por favor inicia sesion en tu cuenta.</p>
+    </div>
+  
+    <div *ngIf="loginDisplay" class="login-message">
+        <p class="login-success">Login successful!</p>
+        <p class="login-info">Request your profile information by clicking Profile above.</p>
+    </div>
+  </div>
