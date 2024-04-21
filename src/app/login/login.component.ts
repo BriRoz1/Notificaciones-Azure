@@ -6,11 +6,11 @@ import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css'
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class LoginComponent {
   title = 'msal-angular-tutorial';
   isIframe = false;
   loginDisplay = false;
@@ -44,7 +44,8 @@ export class AppComponent implements OnInit, OnDestroy {
           next: (result) => {
             console.log(result);
             this.setLoginDisplay();
-            this.router.navigate(['/login'])
+            this.router.navigate(['/profile'])
+            
           },
           error: (error) => console.log(error)
         });
@@ -54,7 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
           next: (result) => {
             console.log(result);
             this.setLoginDisplay();
-            this.router.navigate(['/login'])
+            this.router.navigate(['/profile'])
           },
           error: (error) => console.log(error)
         });
@@ -76,3 +77,4 @@ export class AppComponent implements OnInit, OnDestroy {
     this._destroying$.complete();
   }
 }
+

@@ -4,6 +4,8 @@ import { BrowserUtils } from "@azure/msal-browser";
 import { HomeComponent } from "./home/home.component";
 import { ProfileComponent } from "./profile/profile.component";
 import { MsalGuard } from "@azure/msal-angular";
+import { LoginComponent } from "./login/login.component";
+import { PreferenciasComponent } from "./preferencias/preferencias.component";
 
 const routes: Routes = [
   {
@@ -13,9 +15,18 @@ const routes: Routes = [
   },
   {
     path: "",
-    component: HomeComponent,
+    component: LoginComponent,
   },
-];
+  {
+    path: "login",
+    component: LoginComponent,
+  },
+  {
+    path: "preferencias",
+    component: PreferenciasComponent
+  }
+  
+]
 
 const isIframe = window !== window.parent && !window.opener;
 

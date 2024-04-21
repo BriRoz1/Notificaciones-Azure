@@ -1,0 +1,35 @@
+.login-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Hace que el contenedor ocupe toda la altura de la pantalla */
+  overflow: hidden; /* Oculta el contenido que se desborde del contenedor */
+}
+
+/* Estilos para el video de fondo */
+.login-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* El video cubre todo el contenedor */
+  z-index: -1; /* Coloca el video detrás del contenido */
+}
+
+/* Estilos para el mensaje de inicio de sesión */
+.login-message {
+  position: relative;
+  z-index: 1; /* Coloca el mensaje delante del video */
+  text-align: center;
+  margin-top: 20%;
+}
+
+.login-info {
+  color: #fff;
+  font-size: 24px;
+}
+
+.login-success {
+  color: #fff;
+  font-size: 36px;
+}

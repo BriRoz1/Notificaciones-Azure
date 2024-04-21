@@ -1,31 +1,13 @@
-<!--<div class="container">
+<mat-toolbar color="primary" *ngIf="loginDisplay">
+  <img src="/assets/Images/logo.png" />
+
   <div class="toolbar-spacer"></div>
-  <div class="welcome-message">
-    <p>Bienvenido a la Distri-Noti, por favor inicia sesión en tu cuenta de Microsoft para continuar</p>
-  </div>
-  <button mat-raised-button *ngIf="!loginDisplay" (click)="login()" class="custom-button custom-button-purple">Login</button>
-  <button mat-raised-button *ngIf="loginDisplay" (click)="logout()" class="custom-button custom-button-purple">Logout</button>
-  <div class="content">
-    Esto es para evitar recargar durante acquireTokenSilent() debido al iframe oculto
-    <router-outlet *ngIf="!isIframe"></router-outlet>
-  </div>
-</div>
--->
-
-
+  <a mat-button *ngIf="loginDisplay" [routerLink]="['profile']">Perfil</a>
+  <a mat-button *ngIf="loginDisplay" [routerLink]="['/preferencias']">Preferencias</a>
+  <a mat-button *ngIf="loginDisplay" [routerLink]="['/login']">Gestion de notificaciones</a>
+  <button mat-raised-button *ngIf="loginDisplay" (click)="logout()">Cerrar Sesión</button>
+</mat-toolbar>
 <div class="container">
-	<div class="screen">
-		<div class="screen__content">
-			<button *ngIf="!loginDisplay" (click)="login()" class="button login__submit">Login</button>
-			<div class="social-login">
-				<h3>Inicio de sesion  Distri-Noti</h3>
-			</div>
-		</div>
-		<div class="screen__background">
-			<span class="screen__background__shape screen__background__shape4"></span>
-			<span class="screen__background__shape screen__background__shape3"></span>		
-			<span class="screen__background__shape screen__background__shape2"></span>
-			<span class="screen__background__shape screen__background__shape1"></span>
-		</div>		
-	</div>
+  <!--This is to avoid reload during acquireTokenSilent() because of hidden iframe -->
+  <router-outlet *ngIf="!isIframe"></router-outlet>
 </div>

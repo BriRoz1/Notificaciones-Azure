@@ -22,6 +22,8 @@ import {
   InteractionType,
   PublicClientApplication,
 } from "@azure/msal-browser";
+import { LoginComponent } from './login/login.component';
+import { PreferenciasComponent } from './preferencias/preferencias.component';
 
 const isIE =
   window.navigator.userAgent.indexOf("MSIE ") > -1 ||
@@ -29,7 +31,7 @@ const isIE =
   
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, ProfileComponent],
+  declarations: [AppComponent, HomeComponent, ProfileComponent, LoginComponent, PreferenciasComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
