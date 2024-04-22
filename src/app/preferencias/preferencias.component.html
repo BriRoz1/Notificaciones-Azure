@@ -1,1 +1,15 @@
+<div *ngFor="let user of users">
+    <p>{{ user.name }} - {{ user.email }}</p>
+  </div>
 
+  <h2>Preferencias</h2>
+
+<form (ngSubmit)="guardarPreferencias()">
+  <div *ngFor="let opcion of opciones">
+    <label>
+      <input type="checkbox" [(ngModel)]="seleccionados" [value]="opcion">{{ opcion }}
+    </label>
+  </div>
+  
+  <button type="submit">Guardar</button>
+</form>

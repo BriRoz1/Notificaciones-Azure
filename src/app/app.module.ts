@@ -24,6 +24,7 @@ import {
 } from "@azure/msal-browser";
 import { LoginComponent } from './login/login.component';
 import { PreferenciasComponent } from './preferencias/preferencias.component';
+import { DatabaseService } from "./database.service";
 
 const isIE =
   window.navigator.userAgent.indexOf("MSIE ") > -1 ||
@@ -74,6 +75,7 @@ const isIE =
       multi: true,
     },
     MsalGuard,
+    DatabaseService
   ],
   bootstrap: [AppComponent, MsalRedirectComponent],
 })
