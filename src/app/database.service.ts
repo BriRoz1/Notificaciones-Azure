@@ -19,4 +19,9 @@ export class DatabaseService {
   guardarPreferencias(userData: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/preferencias`, userData);
   }
+  
+   // Método para verificar si ya existen preferencias para un idprofile
+   checkPreferenciasExist(idProfile: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/preferencias/${idProfile}/exists`);
+  }
 }

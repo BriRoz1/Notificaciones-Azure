@@ -57,14 +57,37 @@ export class PreferenciasComponent {
       email: this.profile?.userPrincipalName,
       preferencias: this.seleccionados
     };
-    this.databaseService.guardarPreferencias(userData)
+
+    // Verificar si ya existen preferencias para el idprofile actual
+    this.databaseService.checkPreferenciasExist(userData.idprofile)
       .subscribe(
-        response => {
-          console.log('Datos guardados exitosamente:', response);
-          // Puedes realizar acciones adicionales después de guardar los datos si es necesario
+        exists => {
+          if (exists) {
+            // Si ya existen preferencias, actualizamos en lugar de insertar
+            this.databaseService.guardarPreferencias(userData)
+              .subscribe(
+                response => {
+                  console.log('Datos actualizados exitosamente:', response);
+                },
+                error => {
+                  console.error('Error al actualizar datos:', error);
+                }
+              );
+          } else {
+            // Si no existen preferencias, insertamos
+            this.databaseService.guardarPreferencias(userData)
+              .subscribe(
+                response => {
+                  console.log('Datos guardados exitosamente:', response);
+                },
+                error => {
+                  console.error('Error al guardar datos:', error);
+                }
+              );
+          }
         },
         error => {
-          console.error('Error al guardar datos:', error);
+          console.error('Error al verificar preferencias:', error);
         }
       );
   }
@@ -88,4 +111,6 @@ export class PreferenciasComponent {
       }
     }
   }
+
+  
 }

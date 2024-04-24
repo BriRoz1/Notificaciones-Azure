@@ -1,0 +1,40 @@
+/* Estilos para los checkboxes y etiquetas */
+.checkbox-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Distribuir en columnas de 250px de ancho */
+    gap: 10px; /* Espacio entre los elementos */
+  }
+  
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .checkbox-item input[type="checkbox"] {
+    margin-right: 10px; /* Espacio entre el checkbox y la etiqueta */
+  }
+  
+  .checkbox-item label {
+    font-size: 14px;
+  }
+  
+  button {
+    background-color: rgb(140, 25, 25); /* Color de fondo */
+    color: white; /* Color del texto */
+    padding: 10px 20px; /* Espaciado dentro del botón */
+    border: none; /* Quita el borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor al pasar sobre el botón */
+    transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+    margin-top: 50px;
+  }
+  
+  /* Cambiar el color de fondo al pasar el mouse */
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Cambiar el color de fondo al hacer clic */
+  button:active {
+    background-color: #3e8e41;
+  }

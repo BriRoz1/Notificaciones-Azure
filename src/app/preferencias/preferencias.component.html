@@ -5,13 +5,16 @@
 </div> -->
 
 <h2>Preferencias</h2>
-<form>
-  <p><strong>Id: </strong> {{profile?.id}}</p>
+<form class="form-preferencias">
+  <!-- <p><strong>Id: </strong> {{profile?.id}}</p> -->
   <p><strong>First Name: </strong> {{profile?.givenName}}</p>
   <p><strong>Email: </strong> {{profile?.userPrincipalName}}</p>
-  <div *ngFor="let item of lista; let i = index">
-    <input type="checkbox" id="opcion-{{i}}" [value]="item.id" (change)="onCheckboxChange($event)">
-    <label for="opcion-{{i}}">{{ item.name }}</label>
+  
+  <div class="checkbox-container">
+    <div *ngFor="let item of lista; let i = index" class="checkbox-item">
+      <input type="checkbox" id="opcion-{{i}}" [value]="item.id" (change)="onCheckboxChange($event)">
+      <label for="opcion-{{i}}">{{ item.name }}</label>
+    </div>
   </div>
   
   <button (click)="guardarPreferencias()">Guardar Preferencias</button>
