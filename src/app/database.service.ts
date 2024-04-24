@@ -12,5 +12,11 @@ export class DatabaseService {
   getPreferencias(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/preferencias`);
   }
+  getlistas(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/listas`);
+  }
   
+  guardarPreferencias(userData: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/preferencias`, userData);
+  }
 }

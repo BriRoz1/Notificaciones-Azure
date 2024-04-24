@@ -25,6 +25,7 @@ import {
 import { LoginComponent } from './login/login.component';
 import { PreferenciasComponent } from './preferencias/preferencias.component';
 import { DatabaseService } from "./database.service";
+import { FormsModule } from "@angular/forms";
 
 const isIE =
   window.navigator.userAgent.indexOf("MSIE ") > -1 ||
@@ -41,6 +42,7 @@ const isIE =
     MatToolbarModule,
     MatListModule,
     HttpClientModule,
+    FormsModule,
     MsalModule.forRoot(
       new PublicClientApplication({
         auth: {

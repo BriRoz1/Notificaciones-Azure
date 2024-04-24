@@ -1,15 +1,18 @@
-<div *ngFor="let user of users">
-    <p>{{ user.name }} - {{ user.email }}</p>
-  </div>
 
-  <h2>Preferencias</h2>
 
-<form (ngSubmit)="guardarPreferencias()">
-  <div *ngFor="let opcion of opciones">
-    <label>
-      <input type="checkbox" [(ngModel)]="seleccionados" [value]="opcion">{{ opcion }}
-    </label>
+<!--<div *ngFor="let item of lista">
+  <p>{{ item.name}} </p>
+</div> -->
+
+<h2>Preferencias</h2>
+<form>
+  <p><strong>Id: </strong> {{profile?.id}}</p>
+  <p><strong>First Name: </strong> {{profile?.givenName}}</p>
+  <p><strong>Email: </strong> {{profile?.userPrincipalName}}</p>
+  <div *ngFor="let item of lista; let i = index">
+    <input type="checkbox" id="opcion-{{i}}" [value]="item.id" (change)="onCheckboxChange($event)">
+    <label for="opcion-{{i}}">{{ item.name }}</label>
   </div>
   
-  <button type="submit">Guardar</button>
+  <button (click)="guardarPreferencias()">Guardar Preferencias</button>
 </form>

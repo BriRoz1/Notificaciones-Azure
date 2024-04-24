@@ -1,5 +1,14 @@
 import { Component } from '@angular/core';
 import { DatabaseService } from '../database.service';
+import { HttpClient } from '@angular/common/http';
+
+const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
+
+type ProfileType = {
+  givenName?: string,
+  userPrincipalName?: string,
+  id?: string
+};
 
 @Component({
   selector: 'app-preferencias',
@@ -7,179 +16,76 @@ import { DatabaseService } from '../database.service';
   styleUrls: ['./preferencias.component.css']
 })
 export class PreferenciasComponent {
-  opciones: string[] = [
-    'Abandono-posgrado',
-    'Administracion_centralud',
-    'Admitidos2020-1',
-    'Admitidos2023-1',
-    'Alertas-seguridad',
-    'Apea-admitidos',
-    'Apoyoalimentario',
-    'Asambleauniversitaria',
-    'Carnetdigital',
-    'Comunicadosidexud',
-    'Concejalesbogota',
-    'Contratistas-rh',
-    'Convocatoriaequipos',
-    'Cps-medioamb',
-    'Cuenta-correo-dependencias',
-    'Cuenta-google-egresado',
-    'Cuenta-inst-egresado',
-    'Delegadoscentrorelevo',
-    'Docentes-asab-2020',
-    'Docentesevaluacion',
-    'Egresados-ciencias',
-    'Egresados-esp-avaluos',
-    'Egresados-esp-bioingenieria',
-    'Egresados-esp-gestionproyectos',
-    'Egresados-esp-infor',
-    'Egresados-esp-ingsoftware',
-    'Egresados-esp-proyinformaticos',
-    'Egresados-esp-saludocupacional',
-    'Egresados-esp-sisgeo',
-    'Egresados-esp-telecommoviles',
-    'Egresados-esp-teleinfo',
-    'Egresados-ing-ambiental',
-    'Egresados-ing-catastral',
-    'Egresados-ing-electrica',
-    'Egresados-ing-electronica',
-    'Egresados-ing-industrial',
-    'Egresados-ing-sistemas',
-    'Egresados-ingenieria',
-    'Egresados-medioamb',
-    'Egresados-mt-ingenieria',
-    'Egresados-mt-ingindustrial',
-    'Egresados-mt-moviles',
-    'Egresados-mt-teleinformatica',
-    'Egresados-sin-vinculo-laboral',
-    'Encuestaequipos',
-    'Est-admambiental',
-    'Est-admdeportiva',
-    'Est-danza-2020',
-    'Est-escenicas-2020',
-    'Est-esp-ambiente',
-    'Est-esp-avaluos',
-    'Est-esp-bioingenieria',
-    'Est-esp-gestionproyectos',
-    'Est-esp-infor',
-    'Est-esp-ingsoftware',
-    'Est-esp-proyinformaticos',
-    'Est-esp-recursosnaturales',
-    'Est-esp-saludocupacional',
-    'Est-esp-sisgeo',
-    'Est-esp-telecommoviles',
-    'Est-esp-teleinfo',
-    'Est-evaluaciondocente',
-    'Est-facultad-asab-2017-3',
-    'Est-facultad-porvenir',
-    'Est-facultad-vivero',
-    'Est-ing-ambiental',
-    'Est-ing-catastral',
-    'Est-ing-civil',
-    'Est-ing-control',
-    'Est-ing-electrica',
-    'Est-ing-electronica',
-    'Est-ing-forestal',
-    'Est-ing-industrial',
-    'Est-ing-sanitaria',
-    'Est-ing-sistemas',
-    'Est-ing-topo',
-    'Est-mt-bosques',
-    'Est-mt-desarrollosustentable',
-    'Est-mt-ingenieria',
-    'Est-mt-ingindustrial',
-    'Est-mt-moviles',
-    'Est-mt-teleinformatica',
-    'Est-musica-2020',
-    'Est-plasticas-2020',
-    'Est-posgrados-medioamb',
-    'Est-tec-civiles',
-    'Est-tec-electronica',
-    'Est-tec-gesambiental',
-    'Est-tec-levtopo',
-    'Est-tec-sanea',
-    'Est-tec-tecmecanica',
-    'Est-tec-telecomunicaciones',
-    'Estudiantes-apv',
-    'Estudiantes-asab-2020',
-    'Estudiantes-ingmecanica',
-    'Estudiantes-tecmecanica',
-    'Graduacion-oportuna',
-    'Gsti',
-    'Ilud',
-    'Induccion',
-    'Ing-control-automatizacion',
-    'Ing-telecomunicaciones',
-    'Ingenieriacivil',
-    'Jurados-votacion-2023',
-    'Juradoshcatedra',
-    'Lista_getic_idexud',
-    'Lista_idexud',
-    'Migracionud',
-    'Oficinaegresados',
-    'Paz-ud',
-    'Pcad',
-    'Pdi',
-    'Pdi-admitidos',
-    'Pfisicaoapc',
-    'Planta-medioamb',
-    'Postgrados-ing',
-    'Primersemestre-personales-2020-3',
-    'Primersemestre-ud-2020-3',
-    'Primersemestre2020-1',
-    'Primersemestre2020-3',
-    'Pro-esp-recursosnaturales',
-    'Prof-admambiental',
-    'Prof-admdeportiva',
-    'Prof-esp-ambiente',
-    'Prof-esp-vias',
-    'Prof-ing-ambiental',
-    'Prof-ing-forestal',
-    'Prof-ing-sanitaria',
-    'Prof-ing-topo',
-    'Prof-mt-bosques',
-    'Prof-mt-desarrollosustentable',
-    'Prof-tec-gesambiental',
-    'Prof-tec-levtopo',
-    'Prof-tec-sanea',
-    'Profesores-apv',
-    'Profesores-planta',
-    'Profesores-vicerrecacad',
-    'Prog-egresados',
-    'Proyectoscurriculares',
-    'Prueba',
-    'Rita',
-    'Tdigital',
-    'Tec-elec-industrial',
-    'Tec-electronica',
-    'Tecciviles',
-    'Toficiales',
-    'Usuariosaulastecno',
-    'Usuarioswp',
-    'Virtualizacionformadoresilud'
-  ];
-
   seleccionados: string[] = [];
+  profile!: ProfileType;
+  data: any[] = [];
+  lista: any[] = [];
 
-  users: any[] = [];
-
-  constructor(private databaseService: DatabaseService) { }
+  constructor(private databaseService: DatabaseService, private http: HttpClient) { }
 
   ngOnInit() {
+    this.getProfile();
     this.databaseService.getPreferencias()
       .subscribe(
-        users => {
-          this.users = users;
-          console.log('Preferencias:', users);
+        data => {
+          this.data = data;
+          console.log('Preferencias:', data);
         },
         error => {
-          console.error('Error getting users:', error);
+          console.error('Error getting preferens:', error);
         }
       );
+      this.databaseService.getlistas()
+      .subscribe(
+        lista => {
+          this.lista = lista;
+          console.log('Listas:', lista);
+        },
+        error => {
+          console.error('Error getting listas:', error);
+        }
+      );
+      
+
   }
 
   guardarPreferencias() {
     console.log('Preferencias seleccionadas:', this.seleccionados);
-    // Aquí puedes enviar los datos al backend para guardarlos en la base de datos
+    const userData = {
+      idprofile: this.profile?.id,
+      name: this.profile?.givenName,
+      email: this.profile?.userPrincipalName,
+      preferencias: this.seleccionados
+    };
+    this.databaseService.guardarPreferencias(userData)
+      .subscribe(
+        response => {
+          console.log('Datos guardados exitosamente:', response);
+          // Puedes realizar acciones adicionales después de guardar los datos si es necesario
+        },
+        error => {
+          console.error('Error al guardar datos:', error);
+        }
+      );
+  }
+
+
+  getProfile() {
+    this.http.get(GRAPH_ENDPOINT)
+      .subscribe(profile => {
+        this.profile = profile;
+      });
+  }
+
+  onCheckboxChange(event: any) {
+    const opcion = event.target.value;
+    if (event.target.checked) {
+      this.seleccionados.push(opcion);
+    } else {
+      const index = this.seleccionados.indexOf(opcion);
+      if (index !== -1) {
+        this.seleccionados.splice(index, 1);
+      }
+    }
   }
 }
