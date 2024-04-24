@@ -8,6 +8,7 @@ mat-toolbar {
   padding: 0 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutíl */
   height: 80px;
+  
 }
 
 /* Estilos para los enlaces en el mat-toolbar */
