@@ -1,0 +1,22 @@
+<div class="container">
+  <h1 class="title">Nuevo Correo</h1>
+  <h1 class="title">Selecciona la lista a la que desea programar envios</h1>
+  <div class="form-group">
+   
+    <select class="form-control select-box" (change)="onOptionChange($event)" [(ngModel)]="selectedOption">
+      <option *ngFor="let item of filteredList" [value]="item.name">{{ item.name }}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control email-input" placeholder="Destinatarios" [value]="getEmails()">
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Asunto">
+  </div>
+  <div class="form-group">
+    <textarea class="form-control" rows="5" placeholder="Cuerpo del Correo"></textarea>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-primary">Enviar</button>
+  </div>
+</div>

@@ -6,6 +6,7 @@ import { ProfileComponent } from "./profile/profile.component";
 import { MsalGuard } from "@azure/msal-angular";
 import { LoginComponent } from "./login/login.component";
 import { PreferenciasComponent } from "./preferencias/preferencias.component";
+import { NotificacionComponent } from "./notificaciones/notificacion/notificacion.component";
 
 const routes: Routes = [
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: "preferencias",
     component: PreferenciasComponent
+  },
+  {
+    path: "gestion",
+    component: NotificacionComponent
   }
   
 ]

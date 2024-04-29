@@ -1,40 +1,79 @@
-/* Estilos para los checkboxes y etiquetas */
+.welcome-info {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  animation: slideIn 0.5s ease forwards;
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.preferences-section {
+  margin-bottom: 30px;
+}
+
+.current-preferences {
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 20px;
+}
+
+.form-preferences {
+  border: 2px solid #ccc;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
 .checkbox-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Distribuir en columnas de 250px de ancho */
-    gap: 10px; /* Espacio entre los elementos */
-  }
-  
-  .checkbox-item {
-    display: flex;
-    align-items: center;
-  }
-  
-  .checkbox-item input[type="checkbox"] {
-    margin-right: 10px; /* Espacio entre el checkbox y la etiqueta */
-  }
-  
-  .checkbox-item label {
-    font-size: 14px;
-  }
-  
-  button {
-    background-color: rgb(140, 25, 25); /* Color de fondo */
-    color: white; /* Color del texto */
-    padding: 10px 20px; /* Espaciado dentro del botón */
-    border: none; /* Quita el borde */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cursor al pasar sobre el botón */
-    transition: background-color 0.3s ease; /* Transición suave del color de fondo */
-    margin-top: 50px;
-  }
-  
-  /* Cambiar el color de fondo al pasar el mouse */
-  button:hover {
-    background-color: #45a049;
-  }
-  
-  /* Cambiar el color de fondo al hacer clic */
-  button:active {
-    background-color: #3e8e41;
-  }
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.checkbox-item {
+  flex: 0 0 50%; /* Muestra dos columnas de checkboxes */
+  margin-bottom: 10px;
+}
+
+.save-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.save-button:hover {
+  background-color: #0056b3;
+}
+
+.fa-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

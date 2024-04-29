@@ -20,25 +20,44 @@ export class PreferenciasComponent {
   profile!: ProfileType;
   data: any[] = [];
   lista: any[] = [];
+  filteredList: any[] = []; // Lista filtrada para el buscador
+  guardandoPreferencias: boolean = false;
 
   constructor(private databaseService: DatabaseService, private http: HttpClient) { }
 
   ngOnInit() {
-    this.getProfile();
-    this.databaseService.getPreferencias()
-      .subscribe(
-        data => {
-          this.data = data;
-          console.log('Preferencias:', data);
-        },
-        error => {
-          console.error('Error getting preferens:', error);
+  
+    this.getProfile()
+      .then(idprofile => {
+        if (idprofile) {
+          // Obtener las preferencias del idprofile actual
+          this.databaseService.getPreferenciasByIdProfile(idprofile)
+            .subscribe(
+              data => {
+                this.data = data;
+                console.log('Preferencias:', data);
+              },
+              error => {
+                console.error('Error getting preferencias:', error);
+              }
+            );
+        } else {
+          console.error('No se pudo obtener el idprofile del perfil.');
         }
-      );
+
+  
+      })
+      .catch(error => {
+        console.error('Error al obtener el idprofile:', error);
+      });
+ 
+
+    
       this.databaseService.getlistas()
       .subscribe(
         lista => {
           this.lista = lista;
+          this.filteredList = lista;
           console.log('Listas:', lista);
         },
         error => {
@@ -48,6 +67,13 @@ export class PreferenciasComponent {
       
 
   }
+
+    // Método para filtrar la lista de preferencias según el texto de búsqueda
+    filterPreferences(searchText: string) {
+      this.filteredList = this.lista.filter(item =>
+        item.name.toLowerCase().includes(searchText.toLowerCase())
+      );
+    }
 
   guardarPreferencias() {
     console.log('Preferencias seleccionadas:', this.seleccionados);
@@ -93,11 +119,18 @@ export class PreferenciasComponent {
   }
 
 
-  getProfile() {
-    this.http.get(GRAPH_ENDPOINT)
-      .subscribe(profile => {
-        this.profile = profile;
-      });
+
+
+  async getProfile(): Promise<string | undefined> {
+    try {
+      const profile: any = await this.http.get(GRAPH_ENDPOINT).toPromise();
+      this.profile = profile;
+      console.log('perfil', this.profile.id);
+      return this.profile.id;
+    } catch (error) {
+      console.error('Error getting profile:', error);
+      return undefined;
+    }
   }
 
   onCheckboxChange(event: any) {

@@ -1,21 +1,41 @@
+<div>
+  <div class="welcome-info">
+    Bienvenido de nuevo {{profile?.givenName}} 
+  </div>
 
-
-<!--<div *ngFor="let item of lista">
-  <p>{{ item.name}} </p>
-</div> -->
-
-<h2>Preferencias</h2>
-<form class="form-preferencias">
-  <!-- <p><strong>Id: </strong> {{profile?.id}}</p> -->
-  <p><strong>First Name: </strong> {{profile?.givenName}}</p>
-  <p><strong>Email: </strong> {{profile?.userPrincipalName}}</p>
-  
-  <div class="checkbox-container">
-    <div *ngFor="let item of lista; let i = index" class="checkbox-item">
-      <input type="checkbox" id="opcion-{{i}}" [value]="item.id" (change)="onCheckboxChange($event)">
-      <label for="opcion-{{i}}">{{ item.name }}</label>
+<div class="container">
+  <!-- Tus preferencias actuales -->
+  <div class="preferences-section current-preferences">
+    <h2>Tus preferencias actuales son : </h2>
+    <div *ngFor="let item of data" class="preference-item">
+      <p>{{ item.preferencia }}</p>
     </div>
   </div>
-  
-  <button (click)="guardarPreferencias()">Guardar Preferencias</button>
-</form>
+
+  <!-- Preferencias -->
+  <div class="preferences-section">
+    <h2>Busca nuevas preferencias de información</h2>
+    
+    <form class="form-preferences">
+      <!-- Buscador -->
+    <input type="text" class="search-input" placeholder="Buscar preferencias" (input)="filterPreferences($event.target.value)">
+    
+    <!-- Formulario -->
+    
+
+      <!-- Lista de preferencias con checkboxes -->
+      <div class="checkbox-container">
+        <div *ngFor="let item of filteredList; let i = index" class="checkbox-item">
+          <input type="checkbox" id="opcion-{{ i }}" [value]="item.name" (change)="onCheckboxChange($event)">
+          <label for="opcion-{{ i }}">{{ item.name }}</label>
+        </div>
+      </div>
+
+      <!-- Botón de guardar preferencias -->
+      <button class="save-button" (click)="guardarPreferencias()">
+        <span *ngIf="guardandoPreferencias; else saveText"> <i class="fa fa-spinner fa-spin"></i> </span>
+        <ng-template #saveText>Guardar Preferencias</ng-template>
+      </button>
+    </form>
+  </div>
+</div>

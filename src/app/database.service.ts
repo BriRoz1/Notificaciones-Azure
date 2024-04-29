@@ -24,4 +24,15 @@ export class DatabaseService {
    checkPreferenciasExist(idProfile: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.baseUrl}/preferencias/${idProfile}/exists`);
   }
+
+  getPreferenciasByIdProfile(idProfile: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/preferencias/${idProfile}`);
+  }
+
+  getCorreosByPreferencia(preferencia: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/preferencias/${preferencia}/email`);
+  }
+  
+  
 }
+
