@@ -1,0 +1,9 @@
+<mat-toolbar color="primary" *ngIf="loginDisplay">
+    <img src="/assets/Images/logo.png" />
+  
+    <div class="toolbar-spacer"></div>
+    <a mat-button *ngIf="loginDisplay" [routerLink]="['profile']">Perfil</a>
+    <a mat-button *ngIf="loginDisplay" [routerLink]="['/preferencias']">Preferencias</a>
+    <a mat-button *ngIf="loginDisplay" [routerLink]="['/gestion']">Gestion de notificaciones</a>
+    <button mat-raised-button *ngIf="loginDisplay" (click)="logout()">Cerrar Sesión</button>
+  </mat-toolbar>

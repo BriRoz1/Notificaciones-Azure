@@ -1,0 +1,34 @@
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(140, 25, 25);
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  .footer .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .social-icons {
+    margin-bottom: 10px;
+  }
+  
+  .social-icon {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 20px;
+  }
+  
+  .footer-description p {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .footer .text-muted {
+    font-size: 14px;
+  }

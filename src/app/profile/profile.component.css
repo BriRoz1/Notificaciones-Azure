@@ -1,0 +1,31 @@
+.profile-container {
+    max-width: 700px;
+    margin: auto;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* Esto hará que la imagen sea un círculo */
+    margin: 0 auto 20px; /* Centra la imagen y agrega espacio en la parte inferior */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Agrega una sombra alrededor del borde */
+  }
+  .message {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }

@@ -1,22 +1,63 @@
 <div class="container">
-  <h1 class="title">Nuevo Correo</h1>
-  <h1 class="title">Selecciona la lista a la que desea programar envios</h1>
+  <h2 class="title">Programa nuevo correo</h2>
+  <h2 class="subtitle">Selecciona la lista a la que deseas programar envíos</h2>
   <div class="form-group">
-   
     <select class="form-control select-box" (change)="onOptionChange($event)" [(ngModel)]="selectedOption">
-      <option *ngFor="let item of filteredList" [value]="item.name">{{ item.name }}</option>
+  <option *ngFor="let item of filteredList" [value]="item.name">{{ item.name }}</option>
     </select>
   </div>
   <div class="form-group">
-    <input type="text" class="form-control email-input" placeholder="Destinatarios" [value]="getEmails()">
+    <input type="text" class="form-control email-input" placeholder="Destinatarios" [(ngModel)]="destinatarios" [value]="getEmails()">
   </div>
   <div class="form-group">
-    <input type="text" class="form-control" placeholder="Asunto">
+   <button class="btn btn-secondary" (click)="limpiarDestinatarios()">Limpiar</button>
   </div>
+  
+  
   <div class="form-group">
-    <textarea class="form-control" rows="5" placeholder="Cuerpo del Correo"></textarea>
+    <label for="frecuenciaEnvio">Frecuencia de Envío:</label>
+    <select class="form-control" id="frecuenciaEnvio"  [value]="frecuenciaEnvio" [(ngModel)]="frecuenciaEnvio">
+      <option value="diaria">Diaria</option>
+      <option value="cada2dias">Cada 2 días</option>
+      <option value="cada5dias">Cada 5 días</option>
+      <option value="cada7dias">Cada 7 días</option>
+      <option value="semanal">Una vez por semana</option>
+      <option value="mensual">Mensualmente</option>
+    </select>
   </div>
+
   <div class="form-group">
-    <button class="btn btn-primary">Enviar</button>
+  <label for="fechaFinal">¿Hasta que dia desea enviar las notificaciones?:</label>
+  <input type="date" class="form-control" id="fechaFinal" [(ngModel)]="fechaFinal">
+</div>
+
+  <div class="form-group">
+    <label for="canalEnvio">Canal de Envío:</label>
+    <select class="form-control" id="canalEnvio"  [value]="canalEnvio" >
+      <option value="email">Correo Electrónico</option>
+      <option value="movil">Dispositivos Móviles</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Asunto" [(ngModel)]="asunto">
+  </div>
+  
+  <div class="toolbar">
+    <input type="file" (change)="adjuntarArchivo($event)">
+    <button (click)="aplicarNegrita()" [class.active]="negrita">B</button>
+    <button (click)="aplicarCursiva()" [class.active]="cursiva">I</button>
+    <button (click)="alinearTexto('left')" [class.active]="!centrado">Alinear a la izquierda</button>
+    <button (click)="alinearTexto('center')" [class.active]="centrado">Centrar</button>
+    <button (click)="cambiarTamano('disminuir')">-</button>
+    <button (click)="cambiarTamano('aumentar')">+</button>
+  </div>
+  
+  <div>
+    <textarea [(ngModel)]="cuerpo" style="font-family: {{tipoLetra}}; font-size: {{tamanoLetra}}px; color: {{colorTexto}}; font-weight: {{negrita ? 'bold' : 'normal'}}; font-style: {{cursiva ? 'italic' : 'normal'}}; text-align: {{centrado ? 'center' : 'left'}};"></textarea>
+  </div>
+
+  <div class="form-group">
+    <button (click)= "enviarCorreo()" (click)="limpiarTodo()" class="btn btn-primary">Enviar</button>
   </div>
 </div>

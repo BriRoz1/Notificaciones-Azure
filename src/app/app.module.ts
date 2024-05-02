@@ -27,6 +27,8 @@ import { PreferenciasComponent } from './preferencias/preferencias.component';
 import { DatabaseService } from "./database.service";
 import { FormsModule } from "@angular/forms";
 import { NotificacionComponent } from './notificaciones/notificacion/notificacion.component';
+import { MenuComponent } from './menu/menu/menu.component';
+import { FooterComponent } from './footer/footer/footer.component';
 
 const isIE =
   window.navigator.userAgent.indexOf("MSIE ") > -1 ||
@@ -34,7 +36,7 @@ const isIE =
   
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, ProfileComponent, LoginComponent, PreferenciasComponent, NotificacionComponent],
+  declarations: [AppComponent, HomeComponent, ProfileComponent, LoginComponent, PreferenciasComponent, NotificacionComponent, MenuComponent, FooterComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

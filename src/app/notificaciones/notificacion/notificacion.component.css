@@ -1,104 +1,184 @@
 .container {
-    text-align: left;
-    margin-top: 20px;
-  }
-  
-  .title {
-    font-size: 24px;
-    color: #333;
-  }
-  
-  .select-box {
-    width: 200px;
-    height: 40px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px;
-  }
-  
-  .select-box:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-  }
+  text-align: left;
+  margin-top: 20px;
+}
 
-  .search-input {
-    width: 200px;
-    height: 30px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    padding: 5px;
-  }
+.title {
+  font-size: 24px;
+  color: #333;
+}
 
-  .email-input {
-    width: 400px;
-    height: 30px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-top: 10px;
-    padding: 5px;
-  }
-  .config-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .config-button:hover {
-    background-color: #0056b3;
-  }
+.select-box {
+  width: 500px;
+  height: 200px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+}
 
-  .container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .title {
-    font-size: 24px;
-    color: #333;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .form-control {
-    width: 100%;
-    height: 40px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px;
-  }
-  
-  .select-box {
-    height: 40px;
-  }
-  
-  .email-input {
-    height: 80px; /* Ajusta la altura según sea necesario */
-    resize: vertical;
-  }
-  
-  .btn {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .btn-primary:hover {
-    background-color: #0056b3;
-  }
+.select-box:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.search-input {
+  width: 200px;
+  height: 30px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.email-input {
+  width: 400px;
+  height: 30px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+  padding: 5px;
+}
+.config-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.config-button:hover {
+  background-color: #0056b3;
+}
+
+.container {
+  max-width:1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.title {
+  font-size: 24px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-control {
+  width: 100%;
+  height: 40px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.select-box {
+  height: 40px;
+}
+
+.email-input {
+  height: 80px; /* Ajusta la altura según sea necesario */
+  resize: vertical;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.select-box {
+  height: 40px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+
+
+/* BORRAR
+
+/* Estilo para el contenedor del textarea */
+
+/* Estilo para el textarea */
+textarea {
+width: 100%;
+height: 200px;
+padding: 10px;
+font-family: inherit;
+font-size: inherit;
+color: inherit;
+border: 1px solid #ccc;
+border-radius: 5px;
+transition: border-color 0.3s ease;
+}
+
+/* Estilo para el botón de la barra de herramientas */
+button {
+background-color: #ffffff;
+border: none;
+color: #666666;
+cursor: pointer;
+font-size: 16px;
+padding: 8px 12px;
+margin-right: 5px;
+border-radius: 3px;
+transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Estilo para el botón activo */
+button.active {
+background-color: #f0f0f0;
+color: #333333;
+}
+
+/* Estilo para el botón de adjuntar archivo */
+input[type="file"] {
+display: none;
+}
+
+/* Estilo para el contenedor de los botones de la barra de herramientas */
+.toolbar {
+margin-bottom: 10px;
+}
+
+/* Animación de pulsación para los botones */
+button:hover {
+background-color: #f0f0f0;
+}
+
+/* Animación de cambio de color al enfocar el textarea */
+textarea:focus {
+border-color: #66afe9;
+outline: none;
+}
+
+
+.btn-limpiar {
+  margin-top: 40px;
+  margin-left: 10px; /* Espacio entre el botón y el campo de destinatarios */
+}

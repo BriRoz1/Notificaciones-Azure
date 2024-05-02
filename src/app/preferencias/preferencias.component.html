@@ -9,6 +9,10 @@
     <h2>Tus preferencias actuales son : </h2>
     <div *ngFor="let item of data" class="preference-item">
       <p>{{ item.preferencia }}</p>
+      <button class="save-button" (click)="guardarPreferencias()">
+        <span *ngIf="guardandoPreferencias; else saveText"> <i class="fa fa-spinner fa-spin"></i> </span>
+        <ng-template #saveText>Borrar mis preferencias actuales</ng-template>
+      </button>
     </div>
   </div>
 
