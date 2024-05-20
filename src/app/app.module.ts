@@ -12,16 +12,8 @@ import { AppComponent } from "./app.component";
 import { HomeComponent } from "./home/home.component";
 import { ProfileComponent } from "./profile/profile.component";
 
-import {
-  MsalModule,
-  MsalRedirectComponent,
-  MsalGuard,
-  MsalInterceptor,
-} from "@azure/msal-angular"; // Import MsalInterceptor
-import {
-  InteractionType,
-  PublicClientApplication,
-} from "@azure/msal-browser";
+import { MsalModule,MsalRedirectComponent, MsalGuard, MsalInterceptor,} from "@azure/msal-angular"; // Import MsalInterceptor
+import { InteractionType, PublicClientApplication, } from "@azure/msal-browser";
 import { LoginComponent } from './login/login.component';
 import { PreferenciasComponent } from './preferencias/preferencias.component';
 import { DatabaseService } from "./database.service";
@@ -29,6 +21,13 @@ import { FormsModule } from "@angular/forms";
 import { NotificacionComponent } from './notificaciones/notificacion/notificacion.component';
 import { MenuComponent } from './menu/menu/menu.component';
 import { FooterComponent } from './footer/footer/footer.component';
+
+
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getMessaging, provideMessaging } from '@angular/fire/messaging';
+import { enviroment } from "../enviroments/enviroment";
+import { Firestore } from '@angular/fire/firestore';
+import { } from '@angular/fire/messaging';
 
 const isIE =
   window.navigator.userAgent.indexOf("MSIE ") > -1 ||
@@ -80,7 +79,9 @@ const isIE =
       multi: true,
     },
     MsalGuard,
-    DatabaseService
+    DatabaseService,
+    provideFirebaseApp(() => initializeApp({"projectId":"proyectoudistrital-97c58","appId":"1:771845660727:web:95ec83640d172e6ec09fb2","storageBucket":"proyectoudistrital-97c58.appspot.com","apiKey":"AIzaSyAB4iAHd6ReFxw14pjMJ36m3b1vOOCtHXU","authDomain":"proyectoudistrital-97c58.firebaseapp.com","messagingSenderId":"771845660727","measurementId":"G-9SHRBS3Z80"})),
+    provideMessaging(() => getMessaging())
   ],
   bootstrap: [AppComponent, MsalRedirectComponent],
 })

@@ -1,25 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificacionService } from '../../services/notificacion.service';
 import { DatabaseService } from '../../database.service';
 import { HttpClient } from '@angular/common/http';
-import { PushService } from '../../services/push.service';
+
+
 
 @Component({
   selector: 'app-notificacion',
   templateUrl: './notificacion.component.html',
-  styleUrl: './notificacion.component.css'
+  styleUrls: ['./notificacion.component.css']
 })
-export class NotificacionComponent implements OnInit{
-  fechaFinal = Date;
+export class NotificacionComponent implements OnInit {
+  fechaFinal: Date = new Date();
   lista: any[] = [];
   filteredList: any[] = [];
   selectedOption: any;
-  backupList: any[] = []; // Copia de seguridad de la lista original
+  backupList: any[] = [];
   correos: string[] = [];
-  selectedFontStyle: string = 'Arial'; // Valor por defecto
-  selectedFontSize: string = 'medium'; // Valor por defecto
-
-  
+  selectedFontStyle: string = 'Arial';
+  selectedFontSize: string = 'medium';
 
   tipoLetra: string = 'Arial';
   tamanoLetra: number = 14;
@@ -31,13 +29,18 @@ export class NotificacionComponent implements OnInit{
   destinatarios: string = '';
   asunto: string = '';
   cuerpo: string = '';
-  frecuenciaEnvio: string = 'diaria'; // Valor por defecto
-  canalEnvio: string = 'email'; // Valor por defecto
+  frecuenciaEnvio: string = 'diaria';
+  canalEnvio: string = 'email';
 
 
-  
+  tokens: string[] = [];
 
-  constructor(private databaseService: DatabaseService, private http: HttpClient, private pushService: PushService) { }
+
+  constructor(
+    private databaseService: DatabaseService,
+    private http: HttpClient,
+    
+  ) { }
 
   ngOnInit() {
     this.databaseService.getlistas()
@@ -45,31 +48,28 @@ export class NotificacionComponent implements OnInit{
         lista => {
           this.lista = lista;
           this.filteredList = lista;
-          this.backupList = lista; // Almacenar una copia de seguridad
+          this.backupList = lista;
           console.log('Listas:', lista);
-
-          
         },
         error => {
           console.error('Error getting listas:', error);
         }
-    
       );
-      
+
+    
+    
   }
 
-  mostrarNotificacion() {
-    this.pushService.showNotification('FECHAS DE ANTEPROYECTOS .', {
-      body: 'Hola, revisa tu correo para consultar las fechas de anteproyectos',
-  
-    })
-    console.log('notificacion enviada');
-    
-  }
+
+  // mostrarNotificacion() {
+  //   this.pushService.showNotification('FECHAS DE ANTEPROYECTOS .', {
+  //     body: 'Hola, revisa tu correo para consultar las fechas de anteproyectos',
+  //   });
+  //   console.log('Notificación enviada');
+  // }
 
   enviarCorreo() {
-
-    this.destinatarios = this.getEmails(); 
+    this.destinatarios = this.getEmails();
     const data = {
       destinatarios: this.destinatarios,
       asunto: this.asunto,
@@ -78,12 +78,12 @@ export class NotificacionComponent implements OnInit{
       canalEnvio: this.canalEnvio
     };
 
-    console.log(' destinatarios', this.destinatarios)
-    console.log(' asunto', this.asunto)
-    console.log(' frecuencia',this.frecuenciaEnvio)
-    console.log(' canalEnvio',this.canalEnvio)
-    console.log(' fecha', this.fechaFinal)
-    console.log(' Cuerpo', this.cuerpo)
+    console.log('Destinatarios', this.destinatarios);
+    console.log('Asunto', this.asunto);
+    console.log('Frecuencia', this.frecuenciaEnvio);
+    console.log('CanalEnvio', this.canalEnvio);
+    console.log('Fecha', this.fechaFinal);
+    console.log('Cuerpo', this.cuerpo);
 
     this.http.post('URL_DE_TU_CLOUD_FUNCTION', data)
       .subscribe(response => {
@@ -93,38 +93,47 @@ export class NotificacionComponent implements OnInit{
       });
   }
 
-  
-  
   onOptionChange(event: any) {
     console.log('Opción seleccionada:', this.selectedOption);
-    
     this.databaseService.getCorreosByPreferencia(this.selectedOption)
-    
       .subscribe(
         data => {
           this.lista = data;
           this.filteredList = data;
-          console.log('email:', data);
-         
+          console.log('Email:', data);
         },
         error => {
           console.error('Error getting listas:', error);
         }
-        
       );
-      
+      this.databaseService.getTokensByPreferencia(this.selectedOption)
+      .subscribe(
+        tokens => {
+          this.tokens = tokens;
+          console.log('Tokens:', tokens);
+        },
+        error => {
+          console.error('Error getting tokens:', error);
+        }
+      );
   }
+
+  
+  
 
   onModelChange(event: any) {
     this.filteredList = this.lista.filter(item => item.name === this.selectedOption);
   }
-  
 
   getEmails(): string {
     const emails = this.filteredList.map(item => item.email).filter(email => !!email);
-    const emailsString = emails.join(', ');
-    return emailsString;
+    return emails.join(', ');
   }
+
+  
+
+
+
 
   applyFontStyle(): void {
     const textarea = document.querySelector('.form-control') as HTMLTextAreaElement;
@@ -143,33 +152,24 @@ export class NotificacionComponent implements OnInit{
       case 'large':
         textarea.style.fontSize = '20px';
         break;
-      // Agrega más casos según sea necesario
       default:
         textarea.style.fontSize = 'inherit';
         break;
     }
   }
 
-  // Método para aplicar negrita al texto
   aplicarNegrita() {
     this.negrita = !this.negrita;
   }
 
-  // Método para aplicar cursiva al texto
   aplicarCursiva() {
     this.cursiva = !this.cursiva;
   }
 
-  // Método para alinear texto
   alinearTexto(alineacion: string) {
-    if (alineacion === 'left') {
-      this.centrado = false;
-    } else {
-      this.centrado = true;
-    }
+    this.centrado = alineacion !== 'left';
   }
 
-  // Método para cambiar el tamaño de la letra
   cambiarTamano(accion: string) {
     if (accion === 'aumentar') {
       this.tamanoLetra += 2;
@@ -178,40 +178,26 @@ export class NotificacionComponent implements OnInit{
     }
   }
 
-  // Método para adjuntar archivos
   adjuntarArchivo(event: any) {
     const archivo = event.target.files[0];
-    // Aquí puedes manejar el archivo como desees
+    // Manejar el archivo como desees
   }
-
 
   limpiarDestinatarios() {
-    // Restaurar la lista de destinatarios y la lista filtrada a su estado original
     this.lista = this.backupList;
     this.filteredList = this.backupList;
-  
-    // Limpiar el campo de destinatarios y otros campos relacionados
     this.destinatarios = '';
-
-    console.log('Valores limpiados exitosamente')
- 
-
+    console.log('Valores limpiados exitosamente');
   }
 
-  limpiarTodo(){
-
+  limpiarTodo() {
     this.lista = this.backupList;
     this.filteredList = this.backupList;
-  
-    // Limpiar el campo de destinatarios y otros campos relacionados
     this.destinatarios = '';
     this.asunto = '';
     this.cuerpo = '';
-    this.frecuenciaEnvio = 'diaria'; // Restaurar a la opción por defecto
-    this.canalEnvio = 'email'; // Restaurar a la opción por defecto
-    // También puedes restablecer otros campos según sea necesario
-  
-    // Restablecer estilos de fuente y tamaño de letra
+    this.frecuenciaEnvio = 'diaria';
+    this.canalEnvio = 'email';
     this.selectedFontStyle = 'Arial';
     this.selectedFontSize = 'medium';
     this.tipoLetra = 'Arial';
@@ -219,8 +205,5 @@ export class NotificacionComponent implements OnInit{
     this.negrita = false;
     this.cursiva = false;
     this.centrado = false;
-
-  
   }
 }
-

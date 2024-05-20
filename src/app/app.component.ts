@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, inject } from '@angular/core';
+import { Messaging } from '@angular/fire/messaging';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,5 @@ import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent  {
- 
+  private messaging = inject(Messaging);
 }
