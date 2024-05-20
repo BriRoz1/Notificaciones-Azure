@@ -26,7 +26,7 @@ export class pushService {
       })
       .then((serviceWorkerRegistration) => {
         getToken(this.msg, {
-          vapidKey: `BPdQTuSjOgZZKCEdBUPliHtDvmFM4sYJoem3jrxiFIuE1-Lftb-jFqB0HM-zKxBVnAsHjSha8CBHvXCuva5SnDQ`, // Reemplaza `YOUR_VAPID_KEY` con tu clave VAPID de Firebase
+          vapidKey: `BJQ0QH9y5FjS0bD0AjsJNv1mIVn4j9JOy88SSCEK-QmiGkdUawifLqHAKoel9F7CcaWcDaDfSmxJYdwUMkYfBnU`, // Reemplaza `YOUR_VAPID_KEY` con tu clave VAPID de Firebase
           serviceWorkerRegistration: serviceWorkerRegistration,
         }).then((token) => {
           console.log('Token Navegador:', token);
@@ -44,8 +44,8 @@ export class pushService {
   }
   
 
-  // async deleteToken() {
-  //   // Podemos eliminar los tokens FCM, asegúrate de actualizar esto también en tu base de datos si los estás almacenando
-  //   await deleteToken(this.msg);
-  // }
+    async deleteToken() {
+      // Podemos eliminar los tokens FCM, asegúrate de actualizar esto también en tu base de datos si los estás almacenando
+      await deleteToken(this.msg);
+    }
 }

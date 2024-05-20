@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from '../../database.service';
 import { HttpClient } from '@angular/common/http';
+import { NotificacionService } from '../../services/notificacion.service';
 
 
 
@@ -36,10 +37,17 @@ export class NotificacionComponent implements OnInit {
   tokens: string[] = [];
 
 
+  token = 'e-ov_S2TyjHwFqyJqWe1fT:APA91bE8LJC2c4oSS38_lP2id0Ipnl5XcWSCOvrOa1Lb-lNgPAn16-fny3FPxr2_plzHVSjOfVx26Qd9ZbgMGYjSVlJoiCOsreksfknCiYypgjlPZY602fm1QErS53NX-O3KO1ruLuqb'; // Reemplaza esto con el token real
+  title = 'Demon';
+  body = 'Halo 2 vista';
+
+
+
+
   constructor(
     private databaseService: DatabaseService,
     private http: HttpClient,
-    
+    private notificationService: NotificacionService
   ) { }
 
   ngOnInit() {
@@ -60,6 +68,14 @@ export class NotificacionComponent implements OnInit {
     
   }
 
+  sendNotification() {
+    this.notificationService.sendNotification(this.token, this.title, this.body)
+      .subscribe(response => {
+        console.log('Notification sent:', response);
+      }, error => {
+        console.error('Error sending notification:', error);
+      });
+  }
 
   // mostrarNotificacion() {
   //   this.pushService.showNotification('FECHAS DE ANTEPROYECTOS .', {

@@ -13,4 +13,5 @@ const firebaseApp = initializeApp({
     measurementId: "G-9SHRBS3Z80"
 });
 
+
 const messaging = getMessaging(firebaseApp);
