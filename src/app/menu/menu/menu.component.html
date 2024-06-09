@@ -1,9 +1,22 @@
 <mat-toolbar color="primary" *ngIf="loginDisplay">
-    <img src="/assets/Images/logo.png" />
-  
+    <img src="/assets/Images/logo.png" alt="Logo" />
+
     <div class="toolbar-spacer"></div>
-    <a mat-button *ngIf="loginDisplay" [routerLink]="['profile']">Perfil</a>
-    <a mat-button *ngIf="loginDisplay" [routerLink]="['/preferencias']">Preferencias</a>
-    <a mat-button *ngIf="loginDisplay" [routerLink]="['/gestion']">Gestion de notificaciones</a>
-    <button mat-raised-button *ngIf="loginDisplay" (click)="logout()">Cerrar Sesión</button>
-  </mat-toolbar>
+    <a mat-button *ngIf="loginDisplay " [routerLink]="['profile']">
+        <mat-icon>person</mat-icon>
+        
+        Perfil
+    </a>
+    <a mat-button *ngIf="loginDisplay" [routerLink]="['/preferencias']">
+        <mat-icon>favorite</mat-icon>
+        Preferencias
+    </a>
+    <a mat-button *ngIf="loginDisplay && isAdmin" [routerLink]="['/gestion']">
+        <mat-icon>notifications</mat-icon>
+        Gestion de notificaciones
+    </a>
+    <button mat-raised-button *ngIf="loginDisplay" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Cerrar Sesión
+    </button>
+</mat-toolbar>

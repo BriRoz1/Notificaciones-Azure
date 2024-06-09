@@ -8,10 +8,14 @@
   <div class="preferences-section current-preferences">
     <h2>Tus preferencias actuales son : </h2>
     <div *ngFor="let item of data" class="preference-item">
-      <p>{{ item.preferencia }}</p>
+      <ul>
+        <li *ngFor="let preference of extractContent(item.preferencia)">{{ preference }}</li>
+      </ul>
       <button class="save-button" (click)="guardarPreferencias()">
+        <mat-icon>delete</mat-icon>
         <span *ngIf="guardandoPreferencias; else saveText"> <i class="fa fa-spinner fa-spin"></i> </span>
         <ng-template #saveText>Borrar mis preferencias actuales</ng-template>
+        
       </button>
     </div>
   </div>
@@ -37,6 +41,7 @@
 
       <!-- Botón de guardar preferencias -->
       <button class="save-button" (click)="guardarPreferencias()">
+        <mat-icon>save</mat-icon>
         <span *ngIf="guardandoPreferencias; else saveText"> <i class="fa fa-spinner fa-spin"></i> </span>
         <ng-template #saveText>Guardar Preferencias</ng-template>
       </button>

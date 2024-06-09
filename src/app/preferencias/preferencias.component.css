@@ -1,5 +1,5 @@
 .welcome-info {
-  background-color: #007bff;
+  background-color: rgb(140, 25, 25);
   color: #ffffff;
   padding: 20px;
   border-radius: 5px;
@@ -57,16 +57,26 @@
 }
 
 .save-button {
-  background-color: #007bff;
+  background-color: rgb(140, 25, 25);
   color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  display: flex; /* Alinea el texto e icono horizontalmente */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
+}
+
+.save-button mat-icon,
+.save-button i.fa {
+  margin-top: 5px;
+  margin-right: 5px; /* Espacio entre el icono y el texto */
+  font-size: 18px; /* Tamaño del icono */
 }
 
 .save-button:hover {
-  background-color: #0056b3;
+  background-color: rgb(140, 25, 25);
 }
 
 .fa-spinner {

@@ -145,5 +145,17 @@ export class PreferenciasComponent {
     }
   }
 
-  
+  extractContent(preferencia: string): string[] {
+    try {
+      const parsed = JSON.parse(preferencia);
+      if (Array.isArray(parsed)) {
+        return parsed;
+      } else {
+        return [parsed];
+      }
+    } catch (error) {
+      console.error('Error parsing JSON:', error);
+      return [preferencia]; // Si hay un error, devuelve la cadena original en un array
+    }
+  }
 }

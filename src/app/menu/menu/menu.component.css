@@ -1,52 +1,97 @@
-/* Estilos para el mat-toolbar */
 mat-toolbar {
-    background: rgb(140, 25, 25); /* Gradiente de colores proporcionados */
+    background: rgb(140, 25, 25); /* Color de fondo */
     color: #fff; /* Color del texto */
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutíl */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
     height: 80px;
-  }
-  
-  /* Estilos para los enlaces en el mat-toolbar */
-  mat-toolbar a {
+}
+
+/* Estilos para los enlaces en el mat-toolbar */
+mat-toolbar a {
     text-decoration: none;
     color: #fff;
     margin-right: 20px;
     transition: color 0.3s ease;
-  }
-  
-  mat-toolbar a:hover {
+    display: flex;
+    align-items: center;
+}
+
+mat-toolbar a:hover {
     color: #f05d5d; /* Cambio de color al pasar el mouse */
-  }
-  
-  /* Estilos para los botones en el mat-toolbar */
-  mat-toolbar button {
-    
+}
+
+mat-toolbar a mat-icon {
+    margin-right: 8px;
+}
+
+/* Estilos para los botones en el mat-toolbar */
+mat-toolbar button {
     color: #fff; /* Usando un tono similar al color de fondo */
     margin-left: 20px;
-  }
-  
-  /* Estilos para el contenedor principal */
-  .container {
+    display: flex;
+    align-items: center;
+}
+
+mat-toolbar button mat-icon {
+    margin-right: 8px;
+}
+
+/* Estilos para el contenedor principal */
+.container {
     padding: 20px;
-  }
-  
-  /* Estilos adicionales para el botón de login/logout */
-  mat-raised-button {
+}
+
+/* Estilos adicionales para el botón de login/logout */
+mat-raised-button {
     background: linear-gradient(to right, #C7C5F4, #776BCC); /* Gradiente similar al del mat-toolbar */
     color: #fff;
     margin-left: 20px;
-  }
-  
-  mat-raised-button:hover {
+}
+
+mat-raised-button:hover {
     background: linear-gradient(to right, #B3B1E2, #6658A8); /* Gradiente más oscuro al pasar el mouse */
-  }
-  img{
+}
+
+img {
     margin-top: 1px;
     height: 75px;
     width: 75px;
     margin-left: 20px;
-  }
+}
+
+/* Media queries para dispositivos móviles */
+@media (max-width: 768px) {
+    mat-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        padding: 10px;
+    }
+
+    img {
+        margin: 0 auto;
+        margin-bottom: 10px;
+        height: 60px;
+        width: 60px;
+    }
+
+    .toolbar-spacer {
+        display: none;
+    }
+
+    mat-toolbar a,
+    mat-toolbar button {
+        margin: 5px 0;
+        width: 100%;
+        text-align: left;
+        padding: 10px 20px;
+    }
+
+    mat-toolbar a mat-icon,
+    mat-toolbar button mat-icon {
+        margin-right: 16px;
+    }
+}

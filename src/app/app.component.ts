@@ -7,5 +7,10 @@ import { Messaging } from '@angular/fire/messaging';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent  {
+  loginDisplay = false;
   private messaging = inject(Messaging);
+
+  updateLoginDisplay(value: boolean) {
+    this.loginDisplay = value;
+  }
 }
