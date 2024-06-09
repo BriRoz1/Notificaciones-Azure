@@ -3,7 +3,9 @@ import { DatabaseService } from '../../database.service';
 import { HttpClient } from '@angular/common/http';
 import { NotificacionService } from '../../services/notificacion.service';
 
-
+interface TokenData {
+  token: string;
+}
 
 @Component({
   selector: 'app-notificacion',
@@ -33,16 +35,11 @@ export class NotificacionComponent implements OnInit {
   frecuenciaEnvio: string = 'diaria';
   canalEnvio: string = 'email';
 
-
   tokens: string[] = [];
 
-
-  token = 'e-ov_S2TyjHwFqyJqWe1fT:APA91bE8LJC2c4oSS38_lP2id0Ipnl5XcWSCOvrOa1Lb-lNgPAn16-fny3FPxr2_plzHVSjOfVx26Qd9ZbgMGYjSVlJoiCOsreksfknCiYypgjlPZY602fm1QErS53NX-O3KO1ruLuqb'; // Reemplaza esto con el token real
-  title = 'Demon';
-  body = 'Halo 2 vista';
-
-
-
+  // Elimina el token de prueba ya que ahora manejaremos múltiples tokens
+  title = 'Tienes una nueva notificacion pendiente';
+  body = this.asunto;
 
   constructor(
     private databaseService: DatabaseService,
@@ -63,26 +60,25 @@ export class NotificacionComponent implements OnInit {
           console.error('Error getting listas:', error);
         }
       );
-
-    
-    
   }
 
   sendNotification() {
-    this.notificationService.sendNotification(this.token, this.title, this.body)
-      .subscribe(response => {
-        console.log('Notification sent:', response);
-      }, error => {
-        console.error('Error sending notification:', error);
-      });
-  }
+    const title = 'Tienes una nueva notificacion pendiente';
+    const body = this.asunto;
 
-  // mostrarNotificacion() {
-  //   this.pushService.showNotification('FECHAS DE ANTEPROYECTOS .', {
-  //     body: 'Hola, revisa tu correo para consultar las fechas de anteproyectos',
-  //   });
-  //   console.log('Notificación enviada');
-  // }
+    // Enviar notificaciones a todos los tokens
+    this.tokens.forEach(token => {
+      this.notificationService.sendNotification(token, title, body)
+        .subscribe(
+          response => {
+            console.log(`Notification sent to token ${token}:`, response);
+          },
+          error => {
+            console.error(`Error sending notification to token ${token}:`, error);
+          }
+        );
+    });
+  }
 
   enviarCorreo() {
     this.destinatarios = this.getEmails();
@@ -122,20 +118,18 @@ export class NotificacionComponent implements OnInit {
           console.error('Error getting listas:', error);
         }
       );
-      this.databaseService.getTokensByPreferencia(this.selectedOption)
+
+    this.databaseService.getTokensByPreferencia(this.selectedOption)
       .subscribe(
-        tokens => {
-          this.tokens = tokens;
-          console.log('Tokens:', tokens);
+        (tokens: TokenData[]) => {
+          this.tokens = tokens.map(t => t.token);
+          console.log('Tokens:', this.tokens);
         },
         error => {
           console.error('Error getting tokens:', error);
         }
       );
   }
-
-  
-  
 
   onModelChange(event: any) {
     this.filteredList = this.lista.filter(item => item.name === this.selectedOption);
@@ -145,11 +139,6 @@ export class NotificacionComponent implements OnInit {
     const emails = this.filteredList.map(item => item.email).filter(email => !!email);
     return emails.join(', ');
   }
-
-  
-
-
-
 
   applyFontStyle(): void {
     const textarea = document.querySelector('.form-control') as HTMLTextAreaElement;

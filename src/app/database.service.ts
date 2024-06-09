@@ -43,7 +43,7 @@ export class DatabaseService {
     return this.http.post<any>(`${this.baseUrl}/notification-permission`, data);
   }
 
-  getTokensByPreferencia(preferencia: string): Observable<string[]> {
+  getTokensByPreferencia(preferencia: string): Observable<any> {
     return this.http.get<string[]>(`${this.baseUrl}/token/${preferencia}/tokens`);
   }
 

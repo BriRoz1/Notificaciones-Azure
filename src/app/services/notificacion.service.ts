@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class NotificacionService {
-  apiUrl = 'http://localhost:3000/send-notification';
+  apiUrl = 'http://localhost:4000/send-notification';
 
   constructor(private http: HttpClient) {}
 
@@ -26,4 +26,10 @@ export class NotificacionService {
     const payload = { token, title, body };
     return this.http.post<any>(this.apiUrl, payload);
   }
+
+  sendNotifications(tokens: string[], title: string, body: string): Observable<any> {
+    const payload = { tokens, title, body };
+    return this.http.post<any>(`${this.apiUrl}/bulk`, payload);
+  }
 }
+
