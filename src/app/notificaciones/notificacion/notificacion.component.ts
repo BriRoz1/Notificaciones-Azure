@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from '../../database.service';
 import { HttpClient } from '@angular/common/http';
 import { NotificacionService } from '../../services/notificacion.service';
+import { Editor, Toolbar } from 'ngx-editor';
 
 interface TokenData {
   token: string;
@@ -13,6 +14,36 @@ interface TokenData {
   styleUrls: ['./notificacion.component.css']
 })
 export class NotificacionComponent implements OnInit {
+  editor: Editor;
+
+  toolbar: Toolbar = [
+    // default value
+    ['bold', 'italic'],
+    ['underline', 'strike'],
+    ['code', 'blockquote'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    ['link', 'image'],
+    // or, set options for link:
+    //[{ link: { showOpenInNewTab: false } }, 'image'],
+    ['text_color', 'background_color'],
+    ['align_left', 'align_center', 'align_right', 'align_justify'],
+    ['horizontal_rule', 'format_clear', 'indent', 'outdent'],
+    ['superscript', 'subscript'],
+    ['undo', 'redo'],
+    
+  ];
+  colorPresets = [
+    'red', '#FF0000', 'rgb(255, 0, 0)', 'blue', '#0000FF', 'rgb(0, 0, 255)', 
+    'green', '#00FF00', 'rgb(0, 255, 0)', 'yellow', '#FFFF00', 'rgb(255, 255, 0)', 
+    'black', '#000000', 'rgb(0, 0, 0)', '#FF5733', '#33FF57', '#3357FF', '#800080',
+    '#FFA500', '#FFC0CB', '#00FFFF', '#808080'
+  ];
+
+  
+  html = '';
+
+  
   fechaFinal: Date = new Date();
   lista: any[] = [];
   filteredList: any[] = [];
@@ -37,6 +68,7 @@ export class NotificacionComponent implements OnInit {
 
   tokens: string[] = [];
 
+  // Elimina el token de prueba ya que ahora manejaremos múltiples tokens
   title = 'Tienes una nueva notificacion pendiente';
   body = this.asunto;
 
@@ -47,6 +79,7 @@ export class NotificacionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.editor = new Editor();
     this.databaseService.getlistas()
       .subscribe(
         lista => {
@@ -60,11 +93,15 @@ export class NotificacionComponent implements OnInit {
         }
       );
   }
+  ngOnDestroy(): void {
+    this.editor.destroy();
+  }
 
   sendNotification() {
     const title = 'Tienes una nueva notificacion pendiente';
     const body = this.asunto;
 
+    // Enviar notificaciones a todos los tokens
     this.tokens.forEach(token => {
       this.notificationService.sendNotification(token, title, body)
         .subscribe(
@@ -82,33 +119,35 @@ export class NotificacionComponent implements OnInit {
     const correoData = {
       to: this.getEmails(),
       subject: this.asunto,
-      message: this.buildHtmlMessage() // Usar HTML para el mensaje
+      message: this.cuerpo
     };
+
+    console.log('correo',this.getEmails())
+    console.log('asunto',this.asunto)
+    console.log('cuerpo',this.cuerpo)
+
 
     this.http.post<any>('https://us-central1-proyectoudistrital-97c58.cloudfunctions.net/mailer', correoData).subscribe(
       response => {
         console.log('Correo enviado:', response);
+        // Aquí puedes manejar la respuesta si es necesario
       },
       error => {
         console.error('Error al enviar el correo:', error);
+        // Aquí puedes manejar el error si es necesario
       }
     );
   }
 
-  buildHtmlMessage(): string {
-    return `
-      <div style="font-family: ${this.selectedFontStyle}; font-size: ${this.selectedFontSize}; color: ${this.colorTexto}; text-align: ${this.centrado ? 'center' : 'left'}; ${this.negrita ? 'font-weight: bold;' : ''} ${this.cursiva ? 'font-style: italic;' : ''}">
-        ${this.cuerpo}
-      </div>
-    `;
-  }
-
+  
   onOptionChange(event: any) {
+    console.log('Opción seleccionada:', this.selectedOption);
     this.databaseService.getCorreosByPreferencia(this.selectedOption)
       .subscribe(
         data => {
           this.lista = data;
           this.filteredList = data;
+          console.log('Email:', data);
         },
         error => {
           console.error('Error getting listas:', error);
@@ -119,6 +158,7 @@ export class NotificacionComponent implements OnInit {
       .subscribe(
         (tokens: TokenData[]) => {
           this.tokens = tokens.map(t => t.token);
+          console.log('Tokens:', this.tokens);
         },
         error => {
           console.error('Error getting tokens:', error);
@@ -135,58 +175,11 @@ export class NotificacionComponent implements OnInit {
     return emails.join(', ');
   }
 
-  applyFontStyle(): void {
-    const textarea = document.querySelector('.form-control') as HTMLTextAreaElement;
-    textarea.style.fontFamily = this.selectedFontStyle;
-  }
-
-  applyFontSize(): void {
-    const textarea = document.querySelector('.form-control') as HTMLTextAreaElement;
-    switch (this.selectedFontSize) {
-      case 'small':
-        textarea.style.fontSize = '12px';
-        break;
-      case 'medium':
-        textarea.style.fontSize = '16px';
-        break;
-      case 'large':
-        textarea.style.fontSize = '20px';
-        break;
-      default:
-        textarea.style.fontSize = 'inherit';
-        break;
-    }
-  }
-
-  aplicarNegrita() {
-    this.negrita = !this.negrita;
-  }
-
-  aplicarCursiva() {
-    this.cursiva = !this.cursiva;
-  }
-
-  alinearTexto(alineacion: string) {
-    this.centrado = alineacion !== 'left';
-  }
-
-  cambiarTamano(accion: string) {
-    if (accion === 'aumentar') {
-      this.tamanoLetra += 2;
-    } else if (accion === 'disminuir' && this.tamanoLetra > 8) {
-      this.tamanoLetra -= 2;
-    }
-  }
-
-  adjuntarArchivo(event: any) {
-    const archivo = event.target.files[0];
-    // Manejar el archivo como desees
-  }
-
   limpiarDestinatarios() {
     this.lista = this.backupList;
     this.filteredList = this.backupList;
     this.destinatarios = '';
+    console.log('Valores limpiados exitosamente');
   }
 
   limpiarTodo() {

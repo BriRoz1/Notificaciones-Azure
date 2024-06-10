@@ -11,7 +11,9 @@
   </div>
   
   <div class="form-group">
-   <button class="btn btn-secondary" (click)="limpiarDestinatarios()">Limpiar</button>
+   <button class="btn btn-secondary" (click)="limpiarDestinatarios()"> 
+    <mat-icon>delete forever</mat-icon>
+    Limpiar</button>
   </div>
   
   
@@ -44,24 +46,24 @@
     <input type="text" class="form-control" placeholder="Asunto" [(ngModel)]="asunto">
   </div>
   
-  <div class="toolbar">
-    <input type="file" (change)="adjuntarArchivo($event)">
-    <button (click)="aplicarNegrita()" [class.active]="negrita">B</button>
-    <button (click)="aplicarCursiva()" [class.active]="cursiva">I</button>
-    <button (click)="alinearTexto('left')" [class.active]="!centrado">Alinear a la izquierda</button>
-    <button (click)="alinearTexto('center')" [class.active]="centrado">Centrar</button>
-    <button (click)="cambiarTamano('disminuir')">-</button>
-    <button (click)="cambiarTamano('aumentar')">+</button>
+  
+  <div class="NgxEditor__Wrapper">
+    <ngx-editor-menu
+  [editor]="editor"
+  [toolbar]="toolbar"
+  [colorPresets]="colorPresets"
+  >
+</ngx-editor-menu>
+    <ngx-editor [editor]="editor" [ngModel]="html" [disabled]="false" [placeholder]="'Type here...'"></ngx-editor>
   </div>
   
-  <div>
-    <textarea [(ngModel)]="cuerpo" style="font-family: {{tipoLetra}}; font-size: {{tamanoLetra}}px; color: {{colorTexto}}; font-weight: {{negrita ? 'bold' : 'normal'}}; font-style: {{cursiva ? 'italic' : 'normal'}}; text-align: {{centrado ? 'center' : 'left'}};"></textarea>
-  </div>
-
   <div class="form-group">
-    <button (click)= "enviarCorreo()" (click)="limpiarTodo()" class="btn btn-primary">Enviar</button>
+    <button (click)= "enviarCorreo()" (click)="limpiarTodo()" class="btn btn-primary">
+      <mat-icon>send</mat-icon> 
+      Enviar</button>
   </div>
   <div class="form-group">
     <button (click)= "sendNotification()" (click)="limpiarTodo()" class="btn btn-primary">Enviar Notificacion</button>
   </div>
 </div>
+

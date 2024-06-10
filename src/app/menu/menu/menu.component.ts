@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 const GRAPH_ENDPOINT = 'https://graph.microsoft.com/v1.0/me';
+const USER_ROLE_KEY = 'user_role';
 
 @Component({
   selector: 'app-menu',
@@ -31,21 +32,20 @@ export class MenuComponent implements OnInit, OnDestroy {
     )
     .subscribe(() => {
       this.setLoginDisplay();
-   
     })
   
 
-// Escuchar evento de inicio de sesión
-this.broadcastService.msalSubject$
-.pipe(
-  filter((message: EventMessage) => message.eventType === EventType.LOGIN_SUCCESS),
-  takeUntil(this._destroying$)
-)
-.subscribe(() => {
-  this.getProfile();
-});
-}
- 
+    // Escuchar evento de inicio de sesión
+    this.broadcastService.msalSubject$
+    .pipe(
+      filter((message: EventMessage) => message.eventType === EventType.LOGIN_SUCCESS),
+      takeUntil(this._destroying$)
+    )
+    .subscribe(() => {
+      this.getProfile();
+    });
+    }
+  
   login() {
     if (this.msalGuardConfig.authRequest){
       this.authService.loginPopup({...this.msalGuardConfig.authRequest} as PopupRequest)
@@ -75,16 +75,22 @@ this.broadcastService.msalSubject$
       mainWindowRedirectUri: "/"
     });
   }
-
+  
   setLoginDisplay() {
     this.loginDisplay = this.authService.instance.getAllAccounts().length > 0;
-    this.loginDisplayChange.emit(this.loginDisplay);
+    if (this.loginDisplay) {
+      const storedUserRole = localStorage.getItem(USER_ROLE_KEY);
+      if (storedUserRole) {
+        this.isAdmin = storedUserRole === 'admin';
+      }
+    }
   }
 
   getProfile() {
     this.http.get(GRAPH_ENDPOINT)
       .subscribe((profile: any) => { // Asegúrate de tipar el perfil
         this.isAdmin = profile.jobTitle === 'Administrador'; // Verifica el jobTitle
+        localStorage.setItem(USER_ROLE_KEY, this.isAdmin ? 'admin' : 'regular');
       });
   }
   ngOnDestroy(): void {

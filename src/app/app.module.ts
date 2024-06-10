@@ -29,6 +29,7 @@ import { getMessaging, provideMessaging } from '@angular/fire/messaging';
 import { enviroment } from "../enviroments/enviroment";
 import { Firestore } from '@angular/fire/firestore';
 import { } from '@angular/fire/messaging';
+import { NgxEditorModule } from 'ngx-editor';
 
 const isIE =
   window.navigator.userAgent.indexOf("MSIE ") > -1 ||
@@ -38,6 +39,7 @@ const isIE =
 @NgModule({
   declarations: [AppComponent, HomeComponent, ProfileComponent, LoginComponent, PreferenciasComponent, NotificacionComponent, MenuComponent, FooterComponent],
   imports: [
+    NgxEditorModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
