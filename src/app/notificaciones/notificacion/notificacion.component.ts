@@ -37,7 +37,6 @@ export class NotificacionComponent implements OnInit {
 
   tokens: string[] = [];
 
-  // Elimina el token de prueba ya que ahora manejaremos múltiples tokens
   title = 'Tienes una nueva notificacion pendiente';
   body = this.asunto;
 
@@ -66,7 +65,6 @@ export class NotificacionComponent implements OnInit {
     const title = 'Tienes una nueva notificacion pendiente';
     const body = this.asunto;
 
-    // Enviar notificaciones a todos los tokens
     this.tokens.forEach(token => {
       this.notificationService.sendNotification(token, title, body)
         .subscribe(
@@ -81,38 +79,36 @@ export class NotificacionComponent implements OnInit {
   }
 
   enviarCorreo() {
-    this.destinatarios = this.getEmails();
-    const data = {
-      destinatarios: this.destinatarios,
-      asunto: this.asunto,
-      cuerpo: this.cuerpo,
-      frecuenciaEnvio: this.frecuenciaEnvio,
-      canalEnvio: this.canalEnvio
+    const correoData = {
+      to: this.getEmails(),
+      subject: this.asunto,
+      message: this.buildHtmlMessage() // Usar HTML para el mensaje
     };
 
-    console.log('Destinatarios', this.destinatarios);
-    console.log('Asunto', this.asunto);
-    console.log('Frecuencia', this.frecuenciaEnvio);
-    console.log('CanalEnvio', this.canalEnvio);
-    console.log('Fecha', this.fechaFinal);
-    console.log('Cuerpo', this.cuerpo);
-
-    this.http.post('URL_DE_TU_CLOUD_FUNCTION', data)
-      .subscribe(response => {
-        console.log('Correo enviado exitosamente:', response);
-      }, error => {
+    this.http.post<any>('https://us-central1-proyectoudistrital-97c58.cloudfunctions.net/mailer', correoData).subscribe(
+      response => {
+        console.log('Correo enviado:', response);
+      },
+      error => {
         console.error('Error al enviar el correo:', error);
-      });
+      }
+    );
+  }
+
+  buildHtmlMessage(): string {
+    return `
+      <div style="font-family: ${this.selectedFontStyle}; font-size: ${this.selectedFontSize}; color: ${this.colorTexto}; text-align: ${this.centrado ? 'center' : 'left'}; ${this.negrita ? 'font-weight: bold;' : ''} ${this.cursiva ? 'font-style: italic;' : ''}">
+        ${this.cuerpo}
+      </div>
+    `;
   }
 
   onOptionChange(event: any) {
-    console.log('Opción seleccionada:', this.selectedOption);
     this.databaseService.getCorreosByPreferencia(this.selectedOption)
       .subscribe(
         data => {
           this.lista = data;
           this.filteredList = data;
-          console.log('Email:', data);
         },
         error => {
           console.error('Error getting listas:', error);
@@ -123,7 +119,6 @@ export class NotificacionComponent implements OnInit {
       .subscribe(
         (tokens: TokenData[]) => {
           this.tokens = tokens.map(t => t.token);
-          console.log('Tokens:', this.tokens);
         },
         error => {
           console.error('Error getting tokens:', error);
@@ -192,7 +187,6 @@ export class NotificacionComponent implements OnInit {
     this.lista = this.backupList;
     this.filteredList = this.backupList;
     this.destinatarios = '';
-    console.log('Valores limpiados exitosamente');
   }
 
   limpiarTodo() {
