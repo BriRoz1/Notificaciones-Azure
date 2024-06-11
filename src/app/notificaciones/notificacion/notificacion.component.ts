@@ -50,16 +50,6 @@ export class NotificacionComponent implements OnInit {
   selectedOption: any;
   backupList: any[] = [];
   correos: string[] = [];
-  selectedFontStyle: string = 'Arial';
-  selectedFontSize: string = 'medium';
-
-  tipoLetra: string = 'Arial';
-  tamanoLetra: number = 14;
-  colorTexto: string = '#000000';
-  negrita: boolean = false;
-  cursiva: boolean = false;
-  centrado: boolean = false;
-
   destinatarios: string = '';
   asunto: string = '';
   cuerpo: string = '';
@@ -97,6 +87,7 @@ export class NotificacionComponent implements OnInit {
     this.editor.destroy();
   }
 
+  
   sendNotification() {
     const title = 'Tienes una nueva notificacion pendiente';
     const body = this.asunto;
@@ -121,12 +112,14 @@ export class NotificacionComponent implements OnInit {
       return; // Detiene la ejecución del método si algún campo está vacío
     }
   
+  
     const correoData = {
       to: this.getEmails(),
       subject: this.asunto,
       message: this.cuerpo
     };
   
+    console.log('cuerpo', this.cuerpo)
     this.http.post<any>('https://us-central1-proyectoudistrital-97c58.cloudfunctions.net/mailer', correoData).subscribe(
       response => {
         console.log('Correo enviado:', response);
@@ -191,12 +184,6 @@ export class NotificacionComponent implements OnInit {
     this.cuerpo = '';
     this.frecuenciaEnvio = 'diaria';
     this.canalEnvio = 'email';
-    this.selectedFontStyle = 'Arial';
-    this.selectedFontSize = 'medium';
-    this.tipoLetra = 'Arial';
-    this.tamanoLetra = 14;
-    this.negrita = false;
-    this.cursiva = false;
-    this.centrado = false;
+  
   }
 }

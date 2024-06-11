@@ -46,7 +46,7 @@
     <input type="text" class="form-control" placeholder="Asunto" [(ngModel)]="asunto">
   </div>
   
-  
+<!--   
   <div class="NgxEditor__Wrapper">
     <ngx-editor-menu
   [editor]="editor"
@@ -55,7 +55,24 @@
   >
 </ngx-editor-menu>
     <ngx-editor [editor]="editor" [(ngModel)]="cuerpo" [disabled]="false" [placeholder]="'Type here...'"></ngx-editor>
-  </div>
+    
+  </div> -->
+
+  <editor [(ngModel)]="cuerpo" apiKey="sq2forke21w67jwst8vzb9cf6to5ye6usr55zv852r3tb8kk"
+  [init]="{
+    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+    tinycomments_mode: 'embedded',
+    tinycomments_author: 'Author name',
+    mergetags_list: [
+      { value: 'First.Name', title: 'First Name' },
+      { value: 'Email', title: 'Email' },
+    ],
+    
+  }"
+></editor>
+
+  
   
   <div class="form-group">
     <button (click)= "enviarCorreo()" (click)= "sendNotification()" class="btn btn-primary">

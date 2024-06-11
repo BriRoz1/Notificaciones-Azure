@@ -166,3 +166,7 @@ background-color: #f0f0f0;
     margin-right: 3px; /* Espacio entre el icono y el texto */
     font-size: 18px; /* Tamaño del icono */
   }
+
+  #editor-container {
+    height: 400px;
+  }

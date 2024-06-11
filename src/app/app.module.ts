@@ -30,6 +30,10 @@ import { enviroment } from "../enviroments/enviroment";
 import { Firestore } from '@angular/fire/firestore';
 import { } from '@angular/fire/messaging';
 import { NgxEditorModule } from 'ngx-editor';
+import { EditorModule } from "@tinymce/tinymce-angular";
+
+
+
 
 const isIE =
   window.navigator.userAgent.indexOf("MSIE ") > -1 ||
@@ -39,6 +43,7 @@ const isIE =
 @NgModule({
   declarations: [AppComponent, HomeComponent, ProfileComponent, LoginComponent, PreferenciasComponent, NotificacionComponent, MenuComponent, FooterComponent],
   imports: [
+    EditorModule,
     NgxEditorModule,
     BrowserModule,
     BrowserAnimationsModule,
