@@ -116,25 +116,26 @@ export class NotificacionComponent implements OnInit {
   }
 
   enviarCorreo() {
+    if (!this.asunto || !this.cuerpo) {
+      alert('Por favor, complete todos los campos antes de enviar el correo.');
+      return; // Detiene la ejecución del método si algún campo está vacío
+    }
+  
     const correoData = {
       to: this.getEmails(),
       subject: this.asunto,
       message: this.cuerpo
     };
-
-    console.log('correo',this.getEmails())
-    console.log('asunto',this.asunto)
-    console.log('cuerpo',this.cuerpo)
-
-
+  
     this.http.post<any>('https://us-central1-proyectoudistrital-97c58.cloudfunctions.net/mailer', correoData).subscribe(
       response => {
         console.log('Correo enviado:', response);
-        // Aquí puedes manejar la respuesta si es necesario
+        alert('El correo se ha enviado correctamente.');
+        this.limpiarTodo(); // Limpia los campos después de enviar el correo
       },
       error => {
         console.error('Error al enviar el correo:', error);
-        // Aquí puedes manejar el error si es necesario
+        alert('Ocurrió un error al enviar el correo. Por favor, inténtelo de nuevo.');
       }
     );
   }

@@ -18,7 +18,7 @@
   
   
   <div class="form-group">
-    <label for="frecuenciaEnvio">Frecuencia de Envío:</label>
+    <label for="frecuenciaEnvio">Frecuencia de Envío Notificaciones Push:</label>
     <select class="form-control" id="frecuenciaEnvio"  [value]="frecuenciaEnvio" [(ngModel)]="frecuenciaEnvio">
       <option value="diaria">Diaria</option>
       <option value="cada2dias">Cada 2 días</option>
@@ -30,7 +30,7 @@
   </div>
 
   <div class="form-group">
-  <label for="fechaFinal">¿Hasta que dia desea enviar las notificaciones?:</label>
+  <label for="fechaFinal">¿Hasta que dia desea enviar las notificaciones push?:</label>
   <input type="date" class="form-control" id="fechaFinal" [(ngModel)]="fechaFinal">
 </div>
 
@@ -54,16 +54,16 @@
   [colorPresets]="colorPresets"
   >
 </ngx-editor-menu>
-    <ngx-editor [editor]="editor" [ngModel]="html" [disabled]="false" [placeholder]="'Type here...'"></ngx-editor>
+    <ngx-editor [editor]="editor" [(ngModel)]="cuerpo" [disabled]="false" [placeholder]="'Type here...'"></ngx-editor>
   </div>
   
   <div class="form-group">
-    <button (click)= "enviarCorreo()" (click)="limpiarTodo()" class="btn btn-primary">
+    <button (click)= "enviarCorreo()" (click)= "sendNotification()" class="btn btn-primary">
       <mat-icon>send</mat-icon> 
       Enviar</button>
   </div>
-  <div class="form-group">
+  <!-- <div class="form-group">
     <button (click)= "sendNotification()" (click)="limpiarTodo()" class="btn btn-primary">Enviar Notificacion</button>
-  </div>
+  </div> -->
 </div>
 

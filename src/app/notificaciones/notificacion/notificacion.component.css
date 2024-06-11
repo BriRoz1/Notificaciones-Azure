@@ -147,8 +147,6 @@ button:hover {
 background-color: #f0f0f0;
 }
 
-
-
 .btn-limpiar {
   margin-top: 40px;
   margin-left: 10px; /* Espacio entre el botón y el campo de destinatarios */
@@ -156,20 +154,15 @@ background-color: #f0f0f0;
 
 .NgxEditor__Wrapper {
   margin-top: 20px;
-  height: 200px;
 }
 
 .toolbar {
   margin-bottom: 10px;
 }
 
-.btn mat-icon {
-  font-size: 20px; /* Tamaño del icono */
-  color: inherit; /* Color del icono igual al color del texto del botón */
-  margin-top: 2px;
-  vertical-align: middle; /* Alineación vertical del icono al centro */
-  margin-left: 0px;
-  margin-right: 5px;
- 
-  
-}
+.btn mat-icon
+ {
+    margin-top: 5px;
+    margin-right: 3px; /* Espacio entre el icono y el texto */
+    font-size: 18px; /* Tamaño del icono */
+  }

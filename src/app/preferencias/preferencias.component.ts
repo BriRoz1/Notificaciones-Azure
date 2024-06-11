@@ -75,6 +75,8 @@ export class PreferenciasComponent {
       );
     }
 
+
+    
   guardarPreferencias() {
     console.log('Preferencias seleccionadas:', this.seleccionados);
     const userData = {
@@ -94,6 +96,8 @@ export class PreferenciasComponent {
               .subscribe(
                 response => {
                   console.log('Datos actualizados exitosamente:', response);
+                  this.actualizarDatos();
+                  this.refrescarPagina();
                 },
                 error => {
                   console.error('Error al actualizar datos:', error);
@@ -105,6 +109,8 @@ export class PreferenciasComponent {
               .subscribe(
                 response => {
                   console.log('Datos guardados exitosamente:', response);
+                  this.actualizarDatos();
+                  this.refrescarPagina();
                 },
                 error => {
                   console.error('Error al guardar datos:', error);
@@ -118,8 +124,15 @@ export class PreferenciasComponent {
       );
   }
 
+  refrescarPagina() {
+    // Recargar la página
+    location.reload();
+  }
 
-
+  actualizarDatos() {
+    // Llama a ngOnInit nuevamente para recargar todos los datos
+    this.ngOnInit();
+  }
 
   async getProfile(): Promise<string | undefined> {
     try {
